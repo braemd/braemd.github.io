@@ -1,0 +1,4 @@
+---
+title: "Recurrent Neural Networks"
+---
+Recurrent Neural Networks (RNNs) are a special type of neural networks that are tailored to longitudinal data. They are often demonstrated on the example of weather forcasting. So we were wondering, why not apply them to longitudinal data in pharmacometrics, for example, concentration-time data.
