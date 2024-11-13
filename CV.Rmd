@@ -1,7 +1,0 @@
----
-title: "My CV"
----
-
-Below, you see my CV. My publication list, you can find <a href="https://orcid.org/0000-0001-9094-8361">here</a>.
-
-<embed src="CV_DB.pdf" width=90% height="800" type="application/pdf">
