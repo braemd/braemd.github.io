@@ -1,3 +1,43 @@
+/* index */
+/* carousel */
+.banner-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-slide {
+  display: flex;
+  width: 300%;
+  animation: slide 15s infinite;
+}
+
+.carousel-item {
+  flex: 0 0 33.33%; /* Divide equally for each item */
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+}
+
+@keyframes slide {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(0); }
+  25% { transform: translateX(-33.33%); }
+  55% { transform: translateX(-33.33%); }
+  60% { transform: translateX(-66.66%); }
+  90% { transform: translateX(-66.66%); }
+  95% { transform: translateX(0); }
+  100% { transform: translateX(0); }
+}
+
+.carousel-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+
 /* Projects */
 .projectSection {
   background-color: var(--bg-color, lightgray);
