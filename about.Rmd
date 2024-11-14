@@ -1,0 +1,88 @@
+---
+title: "Who am I?"
+---
+
+<div class="aboutSection">
+ <div class="aboutItems">
+  <div class="aboutItem">
+   <img class="aboutItemImage" src="Dominic.jpg"/>
+   <input type="checkbox" id="toggle1" class="unfolder" />
+   <label for="toggle1" class="toggle-label">
+   <span class="unfold-icon">&#9654;</span>
+   <span class="fold-icon">&#9660;</span>   Dominic</label>
+   <div class="fold">
+   <div style="background-color:#ADD8E6; padding:20px; border-radius:25px;">
+   Hello there, I'm Dominic <br>
+   Some information about my person:
+   <ul>
+    <li>I have around 120 books on my bookshelf, all of which I have read</li>
+    <li>There's a didgeridoo next to my E-piano, guitar, saxophone, and ukulele</li>
+    <li>I drink my coffee without milk or sugar</li>
+    <li>I still don't quite understand how I can learn programming languages easily when looking at my French grades</li>
+   </ul>
+   <blockquote style="font-size:1em">
+   <i>All musicians are subconsciously mathematicians</i><br>
+   - Thelonious Monk, Jazz musician
+   </blockquote>
+   </div>
+   </div>
+  </div>
+  <div class="aboutItem">
+   <img class="aboutItemImage" src="DrD.jpg"/>
+   <input type="checkbox" id="toggle2" class="unfolder" />
+   <label for="toggle2" class="toggle-label">
+   <span class="unfold-icon">&#9654;</span>
+   <span class="fold-icon">&#9660;</span>   Dr. Bräm</label>
+   <div class="fold">
+   <div style="background-color:#ADD8E6; padding:20px; border-radius:25px;">
+   Hi, I'm Dr. Bräm<br>
+   I'm an interdisciplinary scientist in the fields of pharmacometrics and machine learning. Already during my studies in pharmaceutical sciences at ETH Zürich, I was strongly interested in pharmacometrics, programming, and machine learning. After my graduation, I pursued these interests during an internship in the pharmacometrics department at Roche and then further during my PhD. I successfully defended my PhD thesis with the title <i> Novel Integration of Machine Learning and Pharmacometric Approaches to Facilitate Data Analyses in Clinical Research and Drug Development </i> in 2024 at the University Childrens Hospital Basel. My interdisciplinary expertise, my analytical way of thinking, my collaborative mindset, and my enthusiasm to learn new things make me a scientist that is able to solve (almost) any problem he is confronted with.
+   <blockquote style="font-size:1em">
+   <i>Dass ich erkenne was die Welt, im Innersten zusammen hält (GER) <br>
+   So that I may perceive whatever holds the world together in its inmost folds (ENG)<br></i>
+   - Johann Wolfang von Goether, Faust Part I
+   </blockquote>
+   </div>
+   </div>
+  </div>
+  <div class="aboutItem">
+   <img class="aboutItemImage" src="Ringo.jpg"/>
+   <input type="checkbox" id="toggle3" class="unfolder" />
+   <label for="toggle3" class="toggle-label">
+   <span class="unfold-icon">&#9654;</span>
+   <span class="fold-icon">&#9660;</span>   Ringo</label>
+   <div class="fold">
+   <div style="background-color:#ADD8E6; padding:20px; border-radius:25px;">
+   Hi, I'm Ringo<br>
+   Being a scout is such a big part of me that it gets its own section here. Joining the scouts when I was 6 years old, I can't imagine how my life would look like without being Ringo (yes, in Switzerland every scout gets a special scout name). As a scout, I learned taking care of the nature and other people. During my time as scout leader and later group and section leader of our scout association, I learned taking responsibilities, organize and lead people. One major lesson that I internalised from my scout experiences is that to achieve success we need to advance as a team by recognizing and fostering the strengths of each person independent of their age, experience, or background.
+   <blockquote style="font-size:1em">
+   <i>Try and leave this world a little bettern than you found it<br></i>
+   - Robert Baden-Powell, founder of scouts
+   </blockquote>
+   </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Get all checkboxes with the class "unfolder"
+    const toggles = document.querySelectorAll('.aboutItem .unfolder');
+    
+    // Loop through each toggle
+    toggles.forEach(toggle => {
+      toggle.addEventListener('change', function() {
+        // If this checkbox is checked, uncheck all others
+        if (this.checked) {
+          toggles.forEach(otherToggle => {
+            if (otherToggle !== this) {
+              otherToggle.checked = false;
+            }
+          });
+        }
+      });
+    });
+  });
+</script>

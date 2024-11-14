@@ -1,0 +1,5 @@
+---
+title: "My Website"
+---
+
+After working a long time with R and python, I got the feeling, I want to learn something new. So I dove into html and css. Well, what you see here is the result of this.
