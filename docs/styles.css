@@ -1,0 +1,258 @@
+/* The sidebar menu */
+.sideBar {
+  display: flex;
+}
+
+.sideBar .sideNav {
+  margin-top: 23px;
+  min-width: 240px;
+  line-height: 40px;
+  padding-right: 30px;
+}
+
+.sideBar .sideNav a {
+  display: block;
+  padding: 0 10px;
+  position: relative;
+}
+
+.sideBar .sideNav a:hover {
+  text-decoration: none;
+  background-color: #f8f8f8;
+}
+
+.sideBar .sideNav a.current {
+  background-color: #75aadb;
+  color: #fff;
+}
+
+.sideBar .subNav {
+  margin-left: 20px; /* Indentation for child links */
+}
+
+/* Second-level menu links */
+.sideBar .subNav a {
+  line-height: 30px; /* Adjust line height for child links */
+}
+
+/* Parent link when active */
+.sideBar .sideNav a.current {
+  background-color: #75aadb;
+  color: #fff;
+}
+
+/* Child link hover effect */
+.sideBar .subNav a:hover {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+/* Index */
+
+.IndexContent{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.IndexContent .IndexItem{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+  border: 5px solid #000;
+  position: relative;
+  overflow: hidden;
+  margin: 20px;
+}
+
+.IndexContent .IndexItem .background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("abstract_img.jpg");
+  opacity: 0.1;
+  transition: opacity 0.3s ease-in-out;
+  background-size: cover;
+  z-index: -1;
+}
+
+.IndexContent .IndexItem:hover .background{
+  opacity: 0.3;
+}
+
+.IndexContent .IndexItem .IndexImage{
+  flex: 0 0 30%;
+  z-index: 2;
+  opacity: 1;
+}
+
+.IndexContent .IndexItem .IndexText{
+  flex: 0 0 70%;
+  flex-direction: column;
+}
+
+.IndexContent .IndexItem .IndexText .Title{
+  font-size: 2em;
+  text-align: center;
+  padding: 10px;
+}
+
+.IndexContent .IndexItem .IndexText .Text{
+  font-size: 1.3em;
+  text-align: left;
+  padding: 20px;
+}
+
+
+/* topics */
+
+.TopicsContent {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.TopicsContent .TopicsItem{
+  
+}
+
+.TopicsContent .TopicsItem a {
+  color: #36454F;
+}
+
+
+.TopicsContent .TopicsItem ul > li{
+  list-style-type: disc;
+  color: #36454F;
+  font-size: 1.8em;
+}
+
+.TopicsContent .TopicsItem ul ul > li{
+  list-style-type: disc;
+  color: #36454F;
+  font-size: 1.1em;
+}
+
+/* Main Topic Pages */
+
+.MainTopicContent{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.MainTopicContent .MainTopicItem{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+  border: 5px solid #000;
+  position: relative;
+  overflow: hidden;
+  margin: 20px;
+}
+
+.MainTopicContent .MainTopicItem .background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-img, url("nn_background_free.jpg"));
+  opacity: var(--opac, 0.1);
+  transition: opacity 0.3s ease-in-out;
+  background-size: cover;
+  z-index: -1;
+}
+
+.MainTopicContent .MainTopicItem:hover .background{
+  opacity: 0.3;
+}
+
+.MainTopicContent .MainTopicItem .MainTopicImage{
+  flex: 0 0 30%;
+  z-index: 2;
+  opacity: 1;
+}
+
+.MainTopicContent .MainTopicItem .MainTopicText{
+  flex: 0 0 70%;
+  flex-direction: column;
+}
+
+.MainTopicContent .MainTopicItem .MainTopicText .Title{
+  font-size: 2em;
+  text-align: center;
+  padding: 10px;
+}
+
+.MainTopicContent .MainTopicItem .MainTopicText .Text{
+  font-size: 1.3em;
+  text-align: left;
+  padding: 20px;
+}
+
+/* Articles */
+
+.ArticlesContent{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.ArticlesContent .Article{
+  flex: 0 0 31%;
+  border: 1px solid #000;
+  box-shadow: 5px 10px 8px #888888;
+  flex-direction: column;
+  display: flex;
+}
+
+.ArticlesContent .Article .Img{
+  flex: 0 0 75%;
+  background-image: var(--bg-img, url("article_psp.jpg"));
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 120px;
+}
+
+.ArticlesContent .Article .Description{
+  flex: 0 0 20%;
+  padding: 5px;
+  text-align: center;
+}
+
+.ArticlesContent .Article .Description .Title{
+  text-decoration: underline;
+}
+
+.ArticlesContent .Article .Description .Text{
+  
+}
+
+/* About me */
+.AboutContent{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.AboutContent .AboutImg{
+  flex: 0 0 20%;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.AboutContent .AboutText{
+  flex: 0 0 80%;
+  font-size:1.2em
+}
