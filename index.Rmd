@@ -1,5 +1,7 @@
 ---
-title: "My Website"
+title: "Home"
 ---
 
-After working a long time with R and python, I got the feeling, I want to learn something new. So I dove into html and css. Well, what you see here is the result of this.
+As a scientist, one of the major challenges, besides meaningful research itself, is to bring your research to the community. To overcome this challenge, I wanted to make research topics easier accessible through R packages. In this process, I created <a href="https://github.com/braemd/pmxNODE">pmxNODE</a>, a package to facilitate the implementation of low-dimensional NODEs in pharmacometric software, and <a href="https://github.com/braemd/optiDoseR">optiDoseR</a>, a package to generate code for the optiDose approach in pharmacometric software.
+
+This website is dedicated to present tutorials for these packages and other topics of my research.

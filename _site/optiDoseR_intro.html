@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Introduction optiDoseR</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Dominic Bräm</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="about.html">About me</a>
+</li>
+<li>
+  <a href="mailto:domi.braem@hotmail.com">
+    <span class="fa fa-regular fa-envelope"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://linkedin.com/in/dominic-braem">
+    <span class="fa fa-linkedin-square"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+<div class="sideBar">
+  <div class="sideNav">
+    <a href="pmxNODE.html">pmxNODE</a>
+    <div class="subNav">
+     <a href="pmxNODE_intro.html">Introduction</a>
+    </div>
+    <a href="optiDoseR.html">optiDoseR</a>
+    <div class="subNav">
+     <a href="optiDoseR_intro.html">Introduction</a>
+    </div>
+  </div>
+  <div>
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Introduction optiDoseR</h1>
+
+</div>
+
+
+<p><em>optiDoseR</em> is a package to facilitate the application of the
+optiDose approach in Monolix, NONMEM, and nlmixr2.</p>
+<div id="the-optidose-approach" class="section level2">
+<h2>The optiDose approach</h2>
+<p>The optiDose approach, first presented by <span
+class="citation">Bachmann et al. (2021)</span>, introduced an algorithm
+to estimate therapeutic doses based on a pharmacometric model, such that
+therapeutic safety and efficacy targets are fulfilled. While initially,
+this approach was implemented in Matlab, in two follow-up publications,
+Bachmann et al. implemented their approach in NONMEM, a common
+pharmacometric software <span class="citation">(Bachmann et al. 2023,
+2024)</span>. In a later publication, the optiDose approach was further
+implemented in Monolix by <span class="citation">Bräm et al.
+(2025)</span>.</p>
+</div>
+<div id="installation" class="section level2">
+<h2>Installation</h2>
+<p>The development version of <em>optiDoseR</em> can be installed from
+gitHub through:</p>
+<pre class="r"><code>devtools::install_github(&quot;braemd/optiDoseR&quot;)</code></pre>
+</div>
+<div id="general-principle-of-optidoser" class="section level2">
+<h2>General principle of optiDoseR</h2>
+<p>To use <em>optiDoseR</em>, an optiProject-object is initialized and
+all required information for the optiDose algorithm are added, i.e., a
+pharmacometric model, model parameters, dosing information, and
+therapeutic targets. Adding these information can be done in a pipeline
+using the pipe-operator.</p>
+<p>When all required information are added, the optiProject-object can
+be transformed into the final model code and the data. In the following,
+the application of <em>optiDoseR</em> is presented on the example of
+Monolix. However, all shown principles can also be applied to NONMEM and
+nlmixr2 in a similar fashion. For more details, see the vignettes.</p>
+</div>
+<div id="optidoser-for-warfarin-pkpd" class="section level2">
+<h2>optiDoseR for warfarin PKPD</h2>
+<p>The application of <em>optiDoseR</em> is presented for the warfarin
+PKPD demo project in Monolix. The warfarin PKPD data includes warfarin
+PK measurements and PD measurements for platula coagulation activity
+(PCA). In this demonstration, it is assumed that the PKPD model was
+successfully developed and model parameters were estimated.</p>
+<div id="initialization" class="section level3">
+<h3>Initialization</h3>
+<p>Initializing a optiProjcet is done with with the
+<code>newOptiProject</code> function. In this step, it is required to
+define the software for which the optiProject should be created. Note
+that if a Monolix file should be created, the lixoftConnectors package
+must be loaded and initialized.</p>
+<pre class="r"><code>warf_proj &lt;- newOptiProject(&quot;Monolix&quot;)</code></pre>
+</div>
+<div id="adding-a-pharmacometric-project" class="section level3">
+<h3>Adding a pharmacometric project</h3>
+<p>Since the pharmacometric (PMX) model was already fitted in Monolix,
+this Monolix run can be added to the optiProject-object and all
+information are added, i.e., the structural model and population and
+individual parameters. If no already fitted PMX model is available, the
+structural model and parameters can be added manually through
+<code>addPmxModel</code>, <code>addPopParms</code>, and
+<code>addIndParms</code>.</p>
+<pre class="r"><code>warf_proj &lt;- warf_proj %&gt;%
+  addPmxRun(pmx_file = &quot;warfarinPKPD_project.mlxtran&quot;)</code></pre>
+</div>
+<div id="adding-therapeutic-targets" class="section level3">
+<h3>Adding therapeutic targets</h3>
+<p>In this demonstration, it is assumed that the therapeutic target is
+to have warfarin exposure as high as possible without PCA falling below
+30.</p>
+<p>The constraint on PCA can be added through the
+<code>addConstraintAUC</code> function, in which the relevant state (in
+the PMX model, PCA is called “R”), the limit (here 30), whether value
+below or above should be penalized (here “below”), over what time range
+the constraint should be applied (here from 0 to 200 hours), and at what
+time the penalization should be evaluated (here at 200 hours) must be
+defined.</p>
+<p>A warfarin exposure as high as possible can be added through the
+<code>addSecondaryAUC</code> function, in which the relevant state (here
+concentration “Cc”), what values should be penalized (here low values),
+and again penalization time range and evaluation time must be
+defined.</p>
+<pre class="r"><code>warf_proj &lt;- warf_proj %&gt;%
+  addConstraintAUC(state = &quot;R&quot;,
+                   limit=30,
+                   pen_time = c(0,200),
+                   eval_time=200,
+                   pen_values=&quot;below&quot;) %&gt;%
+  addSecondaryAUC(state = &quot;Cc&quot;,
+                  pen_values = &quot;low&quot;,
+                  pen_time = c(0,200),
+                  eval_time=200)</code></pre>
+</div>
+<div id="adding-dosing-information" class="section level3">
+<h3>Adding dosing information</h3>
+<p>Dose levels to be estimated can be added through
+<code>addDoseLevel</code>. In this demonstration, we just add one dose
+at time 0, and initial estimate for the dose should be 100.</p>
+<pre class="r"><code>warf_proj &lt;- warf_proj %&gt;%
+  addDoseLevel(time=0,ini_est = 100)</code></pre>
+</div>
+<div id="finalizing-the-optiproject" class="section level3">
+<h3>Finalizing the optiProject</h3>
+<p>When all relevant information are added to the optiProject-object,
+the optiProject can be saved with the <code>saveOptiProject</code>
+function. For this, a name and path under which the optiProject should
+be saved can be defined. In this first example, we want to estimate the
+dose for the typical individual, thus the argument
+<code>pop = FALSE</code> is given.</p>
+<pre class="r"><code>saveOptiProject(optiProject = warf_proj,
+                name = &quot;mlx_warfarin_optiProject_typical&quot;,
+                save_path = &quot;./Files&quot;,
+                pop = FALSE)</code></pre>
+</div>
+<div id="created-files" class="section level3">
+<h3>Created files</h3>
+<p>With <code>saveOptiProject</code>, a data file is generated that
+includes dosing information, penalization information, and PMX
+parameters to be used in the model:</p>
+<pre class="r"><code>opti_data &lt;- read.csv(&quot;./Files/mlx_warfarin_optiProject_typical_data.csv&quot;)
+print(opti_data)</code></pre>
+<pre><code>##   ID TIME DV AMT EVID DOSE_NR  Tlag_cov   ka_cov    V_cov    Cl_cov   R0_cov
+## 1  1    0  .   1    1       1 0.9199587 1.404503 7.892726 0.1335147 96.53249
+## 2  1  200  0   .    0       . 0.9199587 1.404503 7.892726 0.1335147 96.53249
+##     kout_cov  Imax_cov IC50_cov
+## 1 0.05421594 0.9959997 1.152217
+## 2 0.05421594 0.9959997 1.152217</code></pre>
+<p>The structural model provided through <code>addPmxRun</code> is
+adjusted and required code chunks for therapeutic targets and dosing is
+added. A <em>.mlxtran</em> file is generated with all required settings.
+This can be run directly from R with the lixoftConnectors package or
+from Monolix.</p>
+</div>
+<div id="results" class="section level3">
+<h3>Results</h3>
+<p>The optiProject can be exported form Monolix to Simulx to perform
+simulations with the estimated dose. In this case, simulations for
+warfarin concentration and PCA are performed with EBE dose. As can be
+seen, a dose is estimated with which the PCA doesn’t fall below 30 while
+maintaining a as high as possible warfarin exposure.</p>
+<p><img src="optiDoseR_intro_files/figure-html/unnamed-chunk-10-1.png" width="100%" /></p>
+</div>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="unnumbered">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent"
+entry-spacing="0">
+<div id="ref-bachmann2023computing" class="csl-entry">
+Bachmann, Freya, Gilbert Koch, Robert J Bauer, Britta Steffens, Gabor
+Szinnai, Marc Pfister, and Johannes Schropp. 2023. <span>“Computing
+Optimal Drug Dosing with OptiDose: Implementation in NONMEM.”</span>
+<em>Journal of Pharmacokinetics and Pharmacodynamics</em> 50 (3):
+173–88.
+</div>
+<div id="ref-bachmann2024computing" class="csl-entry">
+———. 2024. <span>“Computing Optimal Drug Dosing Regarding Efficacy and
+Safety: The Enhanced OptiDose Method in NONMEM.”</span> <em>Journal of
+Pharmacokinetics and Pharmacodynamics</em> 51 (6): 919–34.
+</div>
+<div id="ref-bachmann2021optidose" class="csl-entry">
+Bachmann, Freya, Gilbert Koch, Marc Pfister, Gabor Szinnai, and Johannes
+Schropp. 2021. <span>“OptiDose: Computing the Individualized Optimal
+Drug Dosing Regimen Using Optimal Control.”</span> <em>Journal of
+Optimization Theory and Applications</em> 189: 46–65.
+</div>
+<div id="ref-bram2025understanding" class="csl-entry">
+Bräm, Dominic, Freya Bachmann, Johannes Schropp, Verena Gotta, Britta
+Steffens, John van den Anker, Marc Pfister, and Gilbert Koch. 2025.
+<span>“Understanding and Streamlining Dose Finding: From Dose Simulation
+to Dose Estimation.”</span> <em>The Journal of Clinical
+Pharmacology</em>.
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

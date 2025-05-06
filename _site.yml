@@ -1,15 +1,13 @@
-name: "my-website"
+name: "Dominic_braem"
 navbar:
   title: "Dominic Bräm"
   right:
     - text: "Home"
       href: index.html
+    - text: "Tutorials"
+      href: tutorials.html
     - text: "About me"
       href: about.html
-    - text: "My Projects"
-      href: projects.html
-    - text: "CV"
-      href: CV.html
     - icon: fa-regular fa-envelope
       href: mailto:domi.braem@hotmail.com
     - icon: fa fa-linkedin-square

@@ -1,0 +1,36 @@
+---
+title: "Tutorials"
+output: 
+  html_document:
+    includes:
+      before_body: include_tutorials_nav.html
+---
+
+<p style="font-size:1.2em">
+Here you will find tutorials for my R packages.
+</p>
+
+<div class="MainTopicContent">
+ <div class="MainTopicItem" style="--bg-img: url('./Figures/nn_background_free.jpg');">
+ <div class="background"></div>
+  <a href="pmxNODE.html" style="color: inherit; text-decoration: none;">
+  <div class="MainTopicText">
+   <div class="Title">pmxNODE</div>
+   <div class="Text">
+   The pmxNODE package is an R package that facilitates the implementation of low-dimensional NODEs in pharmacometric software like Monolix, NONMEM, and nlmixr2. This allows to fit complex, pharmacometric data without the classical model development process. Further, the translation of NODEs to classical ODEs will be covered in these tutorials.
+   </div>
+  </div>
+ </div>
+ </a>
+ <div class="MainTopicItem" style="--bg-img: url('./Figures/mlimpu_background_free.png');">
+ <div class="background"></div>
+ <a href="optiDoseR.html" style="color: inherit; text-decoration: none;">
+  <div class="MainTopicText">
+   <div class="Title">optiDoseR</div>
+   <div class="Text">
+   The optiDoseR package is a wrapper for optiDose. OptiDose is an approach to estimate optimal doses that fulfill predefined therapeutic targets in Monolix, NONMEM, and nlmixr2. OptiDoseR allows to easily generate the required model code and data for these software.
+   </div>
+  </div>
+  </a>
+ </div>
+</div>
