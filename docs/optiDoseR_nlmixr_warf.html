@@ -11,7 +11,7 @@
 
 
 
-<title>pmxNODE</title>
+<title>optiDoseR for nlmixr2</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -295,31 +295,189 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">pmxNODE</h1>
+<h1 class="title toc-ignore">optiDoseR for nlmixr2</h1>
 
 </div>
 
 
-<p>Neural Ordinary Differential Equations (NODEs) is a machine learning
-approach that combines the concepts of ODEs and Neural Networks (NNs).
-In short, NODEs are ODEs with one or multiple NNs on the right-hand side
-of the differential equation. They allow to fit complex, dynamic data
-without knowing the exact structural form of the ODE.</p>
-<p>In the process of integrating NODEs into pharmacometrics, we
-developed
-<a href="https://doi.org/10.1007/s10928-023-09886-4">low-dimensional
-NODEs</a>. The aim was to integrate pharmacometric principles into NODEs
-and reduce the size of required NNs. This furhter allowed to implement
-<a href="https://doi.org/10.1002/psp4.13265">low-dimensional NODEs in
-pharmacometric software</a>, such as Monolix, NONMEM, and nlmixr2.
-Additionally, inter-individual variability could be applied to the
-parameters of the low-dimensional NODEs, making them a promising tool
-for pharmacometrics.</p>
-<p>To make the approach of low-dimensional NODEs in Monolix, NONMEM, and
-nlmixr2 more accessible, I created the R package
-<a href="https://github.com/braemd/pmxNODE">pmxNODE</a>, that allows to
-utilize NN-functions within your structural model that then gets
-translated into the required equations.</p>
+<p>Using optiDoseR with nlmixr2 allows to have a full pharmacometrics
+(PMX) workflow of preparing data, fitting and estimating PMX parameters,
+and estimating optimal typical and individual doses to fulfill a
+therapeutic goal.</p>
+<div id="loading-libraries" class="section level2">
+<h2>Loading libraries</h2>
+<p>For the entire workflow, the tidyverse package is utilized for data
+processing, the nlmixr2 package for fitting the data and simulating, and
+the optiDoseR package to generate the required model code for estimating
+doses.</p>
+<pre class="r"><code>library(optiDoseR)
+library(tidyverse)
+library(nlmixr2)</code></pre>
+</div>
+<div id="warfarin-pkpd-model" class="section level2">
+<h2>Warfarin PKPD model</h2>
+<p>In this example, we’re looking at the prominent warfarin PKPD
+example. To this end, the structural model for a one-compartment PKPD
+model with indirect response is set up in the nlmixr2
+model-structure.</p>
+<details>
+<summary>
+See code
+</summary>
+<pre class="r"><code>  pk.turnover &lt;- function() {
+    ini({
+      tktr &lt;- log(1)
+      tka &lt;- log(1)
+      tcl &lt;- log(0.1)
+      tv &lt;- log(10)
+      ##
+      eta.ktr ~ 1
+      eta.ka ~ 1
+      eta.cl ~ 2
+      eta.v ~ 1
+      prop.err &lt;- 0.1
+      pkadd.err &lt;- 0.1
+      ##
+      temax &lt;- logit(0.8)
+      tec50 &lt;- log(0.5)
+      tkout &lt;- log(0.05)
+      te0 &lt;- log(100)
+      ##
+      eta.emax ~ .5
+      eta.ec50  ~ .5
+      eta.kout ~ .5
+      eta.e0 ~ .5
+      ##
+      pdadd.err &lt;- 10
+    })
+    model({
+      ktr &lt;- exp(tktr + eta.ktr)
+      ka &lt;- exp(tka + eta.ka)
+      cl &lt;- exp(tcl + eta.cl)
+      v &lt;- exp(tv + eta.v)
+      emax = expit(temax+eta.emax)
+      ec50 =  exp(tec50 + eta.ec50)
+      kout = exp(tkout + eta.kout)
+      e0 = exp(te0 + eta.e0)
+      ##
+      DCP = center/v
+      PD=1-emax*DCP/(ec50+DCP)
+      ##
+      effect(0) = e0
+      kin = e0*kout
+      ##
+      d/dt(depot) = -ktr * depot
+      d/dt(gut) =  ktr * depot -ka * gut
+      d/dt(center) =  ka * gut - cl / v * center
+      d/dt(effect) = kin*PD -kout*effect
+      ##
+      cp = center / v
+      cp ~ prop(prop.err) + add(pkadd.err)
+      effect ~ add(pdadd.err) | pca
+    })
+  }</code></pre>
+</details>
+</div>
+<div id="fitting-the-data" class="section level2">
+<h2>Fitting the data</h2>
+<p>Next, we can fit the model to the warfarin data with the nlmixr
+function to estimate the typical and individual PKPD parameters.</p>
+<pre class="r"><code>fit &lt;- nlmixr(pk.turnover, warfarin, &quot;saem&quot;)</code></pre>
+</div>
+<div id="setting-up-the-optiproject" class="section level2">
+<h2>Setting up the OptiProject</h2>
+<p>Based on the fitted nlmixr2 model, we can set up a OptiProject. The
+OptiProject gathers all information required to generate the model code
+and data for the optiDose approach. The OptiProject is set up with the
+<code>newOptiProject</code> function, where you have to define the
+software for the OptiProject, in this case “nlmixr2”.Then you can load
+the structural model and estimated typical and individual parameters
+from your fitted nlmixr2 object through <code>addPmxRun</code>.</p>
+<pre class="r"><code>warfProj &lt;- newOptiProject(&quot;nlmixr2&quot;) %&gt;%
+  addPmxRun(fit)</code></pre>
+<p>Second, therapeutic targets can be added. In this case, we want the
+effect compartment not to fall below 30 over the time-period from 0 to
+200 with the <code>addConstraintAUC</code> function, while the drug
+exposure is as large as possible, done with the
+<code>addSecondaryAUC</code> function.</p>
+<pre class="r"><code>warfProj &lt;- warfProj %&gt;%
+  addConstraintAUC(state = &quot;effect&quot;,
+                   limit = 30,
+                   pen_time = c(0,200),
+                   eval_time = 200,
+                   pen_values=&quot;below&quot;) %&gt;%
+  addSecondaryAUC(state = &quot;cp&quot;,
+                  pen_values = &quot;low&quot;,
+                  pen_time = c(0,200),
+                  eval_time = 200)</code></pre>
+<p>Finally, we need to define, what dose levels we want to estimate.
+Here, we just want to estimate one dose at time-point 0, and we set the
+initial estimate to 100.</p>
+<pre class="r"><code>warfProj &lt;- warfProj %&gt;%
+  addDoseLevel(time=0,ini_est=100)</code></pre>
+</div>
+<div id="estimating-typical-doses" class="section level2">
+<h2>Estimating typical doses</h2>
+<p>With all the required information gathered in the OptiProject object
+<code>warfProj</code>, we can call the <code>saveOptiProject</code>
+function to transform the information into model code and data. We can
+give it a name, so the new model is saved as <em>name</em>_model and the
+data as <em>name</em>_data. Here, we only want to utilize the typical
+parameter estimates, so we set <em>pop = FALSE</em>. Since we are
+working with nlmixr2, we can directly run the created model with
+<em>run_nlmixr2 = TRUE</em>. The fitted object will be called
+<em>name</em>_fit.</p>
+<pre class="r"><code>saveOptiProject(warfProj,
+                name = &quot;warfOptiModel_typical&quot;,
+                pop = FALSE,
+                run_nlmixr2 = TRUE)</code></pre>
+</div>
+<div id="simulation-for-typical-patient" class="section level2">
+<h2>Simulation for typical patient</h2>
+<p>To check, whether the estimated dose really fulfills the defined
+therapeutic target, we can use the fitted model from the OptiProject to
+perform simulations. We create an eventTable with equal sampling
+time-points between 0 and 200. We also need the data with the previously
+estimated typical PKPD parameters.</p>
+<pre class="r"><code>ev_typical &lt;- eventTable() %&gt;%
+  add.dosing(dose = 1) %&gt;%
+  add.sampling(0:200) %&gt;%
+  et(id=1)
+
+cov_data_typical &lt;- warfOptiModel_typical_data %&gt;%
+  filter(TIME==0) %&gt;%
+  select(-c(TIME,DV,AMT,EVID,MDV))
+
+sim_typical &lt;- rxSolve(warfOptiModel_typical_fit,
+                      events = ev,
+                      iCov=cov_data_typical)
+
+sim_typical_data &lt;- as.data.frame(sim_typical) %&gt;%
+  pivot_longer(cols=c(&quot;cp&quot;,&quot;effect&quot;),
+               names_to = &quot;Compartment&quot;,
+               values_to = &quot;DV&quot;)</code></pre>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>As can be seen in the plot, the effect-compartment perfectly matches
+the predefined therapeutic target of 30, meaning that the estimated dose
+of 41.6 mg leads to maximal drug exposure that does not violate the
+constraint.</p>
+<pre class="r"><code>ggplot(sim_typical_data,aes(x=time,y=DV)) + 
+  geom_hline(data = sim_typical_data %&gt;% 
+               filter(Compartment == &quot;effect&quot;),
+             aes(yintercept = 30), col = &quot;red&quot;, linewidth=2) +
+  geom_line(linewidth=2) +
+  facet_wrap(~Compartment, scales = &quot;free&quot;)</code></pre>
+<p><img src="optiDoseR_nlmixr_warf_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="continuance" class="section level2">
+<h2>Continuance</h2>
+<p>In the tutorial <a href="optiDoseR_nlmixr_warf_iiv.html">optiDoseR
+with IIV for nlmixr2</a>, the here presented concept is extended to
+estimate doses not only for the typical patient, but for all individuals
+in the original warfarin PKPD dataset.</p>
+</div>
 
 
 
