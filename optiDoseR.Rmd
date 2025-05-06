@@ -1,0 +1,11 @@
+---
+title: "optiDoseR"
+output:
+  html_document:
+    includes:
+      before_body: include_tutorials_nav.html
+---
+
+<a href="https://doi.org/10.1007/s10928-022-09840-w">OptiDose</a> is an approach based on control theory that allows to estimate optimal doses that fulfill a predefined therapeutic goal. Since doses can be treated as bioavailablity to estimate, OptiDose was further implemented in <a href="https://doi.org/10.1007/s10928-024-09940-9">NONMEM</a> and <a href="https://doi.org/10.1002/jcph.6188">Monolix</a>.
+
+To facilitate the implementation of OptiDose in pharmacometric software and make it easier accessible, we created the R package <a href="https://github.com/braemd/optiDoseR">optiDoseR</a>. This package automatically generates required code and data sets for the implementation of OptiDose in Monolix, NONMEM, and nlmixr2.

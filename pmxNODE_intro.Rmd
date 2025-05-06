@@ -1,0 +1,122 @@
+---
+title: "Introduction pmxNODE"
+output:
+  html_document:
+    includes:
+      before_body: include_tutorials_nav.html
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<img src="./Figures/pmxNODE_sticker_4.png" align="right" height="138">
+
+The goal of pmxNODE is to facilitate the implementation of neural ordinary differential equations (NODEs) in pharmacometric software, i.e., Monolix, NONMEM, and nlmixr2.
+
+## Installation
+
+You can install the development version of pmxNODE like so:
+
+``` r
+devtools::install_github("braemd/pmxNODE")
+```
+
+## How to use
+
+#### General workflow
+The general workflow of pmxNODE consists of few steps:
+
+* Write a structural model, as you would do normaly for Monolix, NONMEM, or nlmixr2. However, you can utilize NN functions in your model code, e.g., for complex or unknown model parts.
+
+* Convert the written model file with the `nn_converter_XXX` function from the pmxNODE package, e.g. `nn_converter_mlx` for Monolix. This function can also directly generate a *.mlxtran* file with automatically initialized model parameters.
+
+* We suggest to fit the model to the data first without inter-individual variability on neural networks parameters (argument *pop = True* in the `nn_converter_mlx`{.R} function) and add the random effects in a second run, where parameters were initialized with last estimates.
+
+#### NN functions
+
+The NN functions in your structural model do need to be of following form:
+
+* They must be named in order to uniquely identify them in the model (e.g., if the same NN is used to outflow of an absorption compartment and as inflow into the central compartment) and to generate uniquly identifiable parameters.
+
+* The following arguments are mandatory:
+  - `state`: Defines the state that goes into the NN
+  - `min_init`: The minimal expected input into the NN
+  - `max_init`: The maximal expected input into the NN
+  The minimal and maximal expected inputs are needed to properly initialize the weights of the NN. They don't need to be exact but should roughly give the range of expected inputs.
+  
+* The following arguments are optional:
+  - `n_hidden`: Number of units in the hidden layer. Default is 5.
+  - `act`: Activation function to be used in the hidden layer. Currently, only "ReLU" and "Softplus" are available. Default is "ReLU".
+  - `time_nn`: Whether the NN should be a "Time-dependent NN" according to https://doi.org/10.1007/s10928-023-09886-4, i.e., whether the weights from input to hidden layer should be negative. Default is FALSE.
+
+#### Package loading and initialization
+
+We first need to load the pmxNODE package and to initialize the lixoftConnectors package (can be done with the `software_initializer`{.R} function from pmxNODE).
+
+If the lixoftConnectors package is not yet installed, an installation path to the package .tar.gz file from Monolix must be provided.
+
+```{r, echo = T, results = 'hide', eval = F}
+library(pmxNODE)
+library(ggplot2)
+software_initializer(software = "Monolix",
+                     mlx_path = "C:/ProgramData/Lixoft/MonolixSuite2021R2")
+```
+
+
+#### Examples
+Some examples are available in the pmxNODE package. To see all example files, you can use the `get_example_list`{.R} function. To copy an example to a folder of your choice, you can use the `copy_example`{.R} function. After calling the `copy_examples`{.R} function, two files should be in the target folder, a data file and a Monolix model file.
+
+```{r, echo = T, results = 'hide', eval = F}
+get_example_list()
+
+copy_examples(
+  target_folder = "~/pmxNODE",
+  example_nr = 1,
+  example_software = "Monolix"
+)
+```
+
+
+#### Converting and population fit
+Before fitting the model, it needs to be converted with the `nn_converter_mlx`{.R} function. In addition to the path/file name of the unconverted Monolix model and the argument on including inter-individual variability for the neural network parameters, a Monolix *.mlxtran* file can be automatically generated with the *gen_mlx_file = TRUE* argument. In order to do so, a data file and the header types must be provided. If no file name for the new Monolix file is given through the *mlx_name* argument, the Monolix file name is automatically generated based on the Monolix model file. Note that a suffix is added to the file name, either *\_pop* if *pop = TRUE* or *\_ind* if *ind = TRUE*.
+
+The model can be automatically run from R with the function `run_mlx`{.R} from the pmxNODE package.
+
+```{r, echo = T, results = 'hide', eval = F}
+nn_converter_mlx(mlx_path = "~/pmxNODE/mlx_example1_model.txt",
+                 pop = TRUE,
+                 gen_mlx_file = TRUE,
+                 mlx_name = "~/pmxNODE/mlx_example1",
+                 data_file = "~/pmxNODE/data_example1_mlx.csv",
+                 header_types = c("id","time","amount","observation"))
+
+run_mlx("~/pmxNODE/mlx_example1_pop.mlxtran")
+```
+
+#### Converting and individual fit
+In order to get the parameter estimations from the population fit (without inter-individual variability), the `pre_fixef_extractor_mlx`{.R} function can be utilized.
+
+These parameter estimates can be given as additional argument *pre_fixef* to the `nn_converter_mlx`{.R} function. To include inter-individual variability, the population argument is set to false (*pop = FALSE*) in the `nn_converter_mlx`{.R} function.
+
+The final model with inter-individual variability can then be fitted again with the `run_mlx`{.R} function.
+
+```{r, echo = T, results = 'hide', eval = F}
+est_parms <- pre_fixef_extractor_mlx("~/pmxNODE/mlx_example1_pop.mlxtran")
+
+nn_converter_mlx(mlx_path = "~/pmxNODE/mlx_example1_model.txt",
+                 pop = FALSE,
+                 pre_fixef = est_parms,
+                 gen_mlx_file = TRUE,
+                 mlx_name = "~/pmxNODE/mlx_example1",
+                 data_file = "~/pmxNODE/data_example1_mlx.csv",
+                 header_types = c("id","time","amount","observation"))
+
+run_mlx("~/pmxNODE/mlx_example1_ind.mlxtran")
+```

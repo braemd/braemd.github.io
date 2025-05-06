@@ -1,0 +1,13 @@
+---
+title: "pmxNODE"
+output:
+  html_document:
+    includes:
+      before_body: include_tutorials_nav.html
+---
+
+Neural Ordinary Differential Equations (NODEs) is a machine learning approach that combines the concepts of ODEs and Neural Networks (NNs). In short, NODEs are ODEs with one or multiple NNs on the right-hand side of the differential equation. They allow to fit complex, dynamic data without knowing the exact structural form of the ODE.
+
+In the process of integrating NODEs into pharmacometrics, we developed <a href="https://doi.org/10.1007/s10928-023-09886-4">low-dimensional NODEs</a>. The aim was to integrate pharmacometric principles into NODEs and reduce the size of required NNs. This furhter allowed to implement <a href="https://doi.org/10.1002/psp4.13265">low-dimensional NODEs in pharmacometric software</a>, such as Monolix, NONMEM, and nlmixr2. Additionally, inter-individual variability could be applied to the parameters of the low-dimensional NODEs, making them a promising tool for pharmacometrics.
+
+To make the approach of low-dimensional NODEs in Monolix, NONMEM, and nlmixr2 more accessible, I created the R package <a href="https://github.com/braemd/pmxNODE">pmxNODE</a>, that allows to utilize NN-functions within your structural model that then gets translated into the required equations.
