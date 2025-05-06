@@ -304,12 +304,10 @@ $(document).ready(function () {
     <a href="pmxNODE.html">pmxNODE</a>
     <div class="subNav">
      <a href="pmxNODE_intro.html">Introduction</a>
-     <a href="pmxNODE_warf_mlx.html">Warfarin in Monolix</a>
     </div>
     <a href="optiDoseR.html">optiDoseR</a>
     <div class="subNav">
      <a href="optiDoseR_intro.html">Introduction</a>
-     <a href="optiDoseR_warf_mlx.html">Warfarin in Monolix</a>
     </div>
   </div>
   <div>
@@ -441,12 +439,12 @@ includes dosing information, penalization information, and PMX
 parameters to be used in the model:</p>
 <pre class="r"><code>opti_data &lt;- read.csv(&quot;./Files/mlx_warfarin_optiProject_typical_data.csv&quot;)
 print(opti_data)</code></pre>
-<pre><code>##   ID TIME DV AMT EVID DOSE_NR  Tlag_cov   ka_cov    V_cov    Cl_cov   R0_cov
-## 1  1    0  .   1    1       1 0.9199587 1.404503 7.892726 0.1335147 96.53249
-## 2  1  200  0   .    0       . 0.9199587 1.404503 7.892726 0.1335147 96.53249
-##     kout_cov  Imax_cov IC50_cov
-## 1 0.05421594 0.9959997 1.152217
-## 2 0.05421594 0.9959997 1.152217</code></pre>
+<pre><code>##   ID TIME DV AMT EVID DOSE_NR  Tlag_cov   ka_cov    V_cov    Cl_cov   R0_cov   kout_cov
+## 1  1    0  .   1    1       1 0.9199587 1.404503 7.892726 0.1335147 96.53249 0.05421594
+## 2  1  200  0   .    0       . 0.9199587 1.404503 7.892726 0.1335147 96.53249 0.05421594
+##    Imax_cov IC50_cov
+## 1 0.9959997 1.152217
+## 2 0.9959997 1.152217</code></pre>
 <p>The structural model provided through <code>addPmxRun</code> is
 adjusted and required code chunks for therapeutic targets and dosing is
 added. A <em>.mlxtran</em> file is generated with all required settings.
