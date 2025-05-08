@@ -1,0 +1,187 @@
+---
+title: "Setting up OptiProject"
+output:
+  html_document:
+    includes:
+      before_body: include_tutorials_nav.html
+---
+
+An OptiProject is an R object, that contains all required information to generate required model code and data for the optiDose approach. Setting up an OptiProject requires to define, for which software the model code and data should be generated (currently Monolix, NONMEM, and nlmixr2 are available)
+
+```{r, eval=FALSE}
+nlmixr_obj <- newOptiProject("nlmixr2")
+mlx_obj <- newOptiProject("Monolix")
+nm_obj <- newOptiProject("NONMEM")
+```
+
+All further information can be added to the OptiProject throgh different functions. Note that they can be added through a pipeline, e.g. with a pipe operator.
+
+## PMX requirements
+
+Since optiDose estimates doses in the context of a PMX model, following information must be added to the OptiProject:
+
+* A structural PMX model
+
+* PMX parameters for solving the structural model. Either
+  - population parameters, if only the typical dose should be estimated or individual doses should be estimated for a simulated population.
+  - individual parameter sets, if individual doses should be estimated for previously fitted patients
+  
+Both information can either be added simultaneously through loading a previously fitted PMX model or separately.
+
+If working with nlmixr2, simply the fitted nlmixr-object can be added
+```{r, eval=FALSE}
+nlmixr_obj <- nlmixr_obj %>%
+  addPmxRun(fit)
+```
+
+When adding a Monolix run, the path to the *.mlxtran* file needs to be specified and if a structural model from the Monolix model library was used, the path to the Monolix Suite installation needs to be provided.
+```{r, eval=FALSE}
+mlx_obj <- mlx_obj %>%
+  addPmxRun(pmx_file = "./Files/warfarinPKPD_project.mlxtran")
+```
+
+For NONMEM, the control file, the results file and the phi file are required to add the structural model, the population parameters, and individual parameters.
+
+```{r, eval=FALSE}
+nm_obj <- nm_obj %>%
+  addPmxRun(pmx_file = "./Files/warfarin_PKPD.ctl",
+            res_file = "./Files/warfarin_PKPD.res",
+            phi_file = "./Files/warfarin_PKPD.phi")
+```
+
+If no previously fitted PMX model is available, the structural model and the parameters can also be added manually.
+```{r, eval=FALSE}
+one.compartment <- function() {
+  ini({
+    tk <- log(0.5)
+    tv <- log(2)
+    eta.cl ~ 0.1
+    eta.v ~ 0.2
+    add.err <- 0.3
+  })
+  # and a model block with the error specification and model specification
+  model({
+    k <- exp(tk + eta.k)
+    v <- exp(tv + eta.v)
+    d/dt(center) <- - k * center
+    cp <- center / v
+    cp ~ add(add.err)
+  })
+}
+
+pop_parms <- data.frame(parameter = c("tk","tv","eta.k","eta.v"),
+                        value = c(log(0.5),log(2),0.1,0.2))
+
+nlmixr_obj_2 <- newOptiPoject("nlmixr2") %>%
+  addPmxModel(one.compartment) %>%
+  addPopParms(pop_parms)
+```
+
+## Adding therapeutic targets
+
+The core functionality of optiDose is to estimate doses that fulfill a predefined therapeutic target. This means, a penalization is applied, if a defined therapeutic target is violated. In optiDoseR, four types of therapeutic targets can be defined:
+
+* Constraints are limits for states in the PMX model. If a state falls below or goes above this target, it gets penalized.
+
+* Secondary targets penalize low or high state value. They are usually required in combination with constraint. For example, a constraint that penalizes state values below a limit is a one-sided therapeutic target, i.e., the dose is not identifiable since all state values above this limit are not penalized. Therefore, a secondary target is needed, e.g., to penalize high state values. Usually, secondary targets are less penalized as constraints.
+
+* Target values penalize state values, that diverge from this target.
+
+* Target functions are reference functions if a certain time-course of a state is targeted.
+
+All therapeutic targets can be defined for one time-point or for a time-window. The functions to add therapeutic targets are independent of the software. In the following, we will demonstrate it on the nlmixr2 OptiProject-object, but everything can similarly be applied to OptiProjects in other software.
+
+### Constraints
+
+A constraint can be added with the `addConstraint` (single time-point) or `addConstraintAUC` (time-window) functions. Since more often therapeutic targets are applied over a time-window, we will focus on the `addConstraintAUC` function. Following arguments are required:
+
+* *state* defines the state for which a limit should be applied.
+* *limit* defines the limit for the constraint.
+* *pen_time* defines the time-window over which the constraint should be applied.
+* *eval_time* time-point at which the evaluation is added in the data set, usually the last time-point of all therapeutic targets.
+* *pen_values* defines whether state values below the limit or above the limit should be penalized.
+
+The following code penalizes values in the effect compartment below 30 within the time-window 0 to 200.
+
+```{r, eval=FALSE}
+nlmixr_obj <- nlmixr_obj %>%
+  addConstraintAUC(state = "effect",
+                   limit = 30,
+                   pen_time = c(0,200),
+                   eval_time = 200,
+                   pen_values="below")
+```
+
+For optiDose to be able to identify/estimate a dose, the therapeutic targets must be two-sided, i.e., there is a penalization for too high and too low doses. As mentioned previously, a constraint is only a one-sided therapeutic target. Instead of adding a secondary target, it would also be possible to add a second constraint, penalizing state values above an other limit. However, this is only reasonable, if multiple subjects are in the data, so the typical dose with which most subjects fall between these two constraints is estimated. For a single subject, a dose with two constraint as therapeutic targets is still not identifiable.
+
+### Secondary target
+
+A secondary target can be added with the `addSecondary` or `addSecondaryAUC` functions. As default, secondary targets are penalized 100 times less than a constraint to ensure, that first the constraint is not violated and only then, the secondary target is considered. Following arguments are required:
+
+* *state* defines the state for which high or low values should be penalized.
+* *pen_values* defines whether low or high values should be penalized.
+* *pen_time*defines the time-window over which the constraint should be applied.
+* *eval_time* time-point at which the evaluation is added in the data set, usually the last time-point of all therapeutic targets.
+
+The following code penalizes low concentrations. Note that the model used in the *nlmixr_obj* here is a PKPD model with indirect response. Previously, we penalized effect values below 30. Since this would suggest low concentrations (low concentrations --> high effect values), we need to penalize low concentrations in the central compartment *cp*.
+
+```{r, eval=FALSE}
+nlmixr_obj <- nlmixr_obj %>%
+  addSecondaryAUC(state = "cp",
+                  pen_values = "low",
+                  pen_time = c(0,200),
+                  eval_time = 200)
+```
+
+### Target values
+
+Target values can be used either to maintain a state at a certain value over time (`addTargetValueAUC`) or at a specific time-point (`addTargetValue`). For example, if a trough concentration of 10 should be reached, this can be added through a target value.
+
+```{r, eval=FALSE}
+nlmixr_obj_2 <- nlmixr_obj_2 %>%
+  addTargetValue(state = "cp",
+                 target_value = 10,
+                 time = 24)
+```
+
+### Target functions
+
+If a state should follow a predefined time-course, e.g., if the state should not decrease to steep, a target function can be defined.
+
+```{r, eval=FALSE}
+nlmixr_obj_3 <- nlmixr_obj %>%
+  addTargetFunAUC("effect",
+                  target_fun = "100 * exp(-0.2 * t)",
+                  pen_time = c(0,200),
+                  eval_time = 200)
+```
+
+## Adding dose levels
+
+With the function `addDoseLevel`, a dose level can be added that should be estimated. Following arguments can be given:
+
+* *time* time-point of fist dose of this dose level.
+* *n_dose* number of doses for this dose level. Default is 1.
+* *ini_est* initial estimate for this dose level.
+* *dose_interval* the dosing interval if multiple doses for this dose level is given.
+* *adm* the administration ID for this dose level if different administration IDs are present in the structural model.
+
+```{r, eval=FALSE}
+nlmixr_obj <- nlmixr_obj %>%
+  addDoseLevel(time = 0,
+               n_dose = 2,
+               dose_interval = 24,
+               ini_est = 50)
+```
+
+## Evaluate OptiProject
+
+To evaluate the information in an OptiProject-object and to generate the model code and the data, the `saveOptiProject` function can be used. Some of the arguments are software-specific. Please refer to the help page of this function for more information.
+
+```{r, eval=FALSE}
+saveOptiProject(nlmixr_obj)
+```
+
+## Conclusion
+
+With relatively simple functions, an entire optiDose set up can be generated to estimate doses that fulfill defined therapeutic targets.
