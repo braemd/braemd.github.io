@@ -53,9 +53,6 @@ website:
       - icon: person-badge
         href: https://orcid.org/0000-0001-9094-8361
         aria-label: ORCID
-      - icon: envelope
-        href: mailto:domi.braem@hotmail.com
-        aria-label: Email
 
   sidebar:
     - id: tutorials

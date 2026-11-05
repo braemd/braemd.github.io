@@ -27,7 +27,6 @@ source("R/site.R")
 [Research](research.qmd){.btn .btn-primary}
 [Publications](publications.qmd){.btn .btn-outline-primary}
 [CV](cv.qmd){.btn .btn-outline-primary}
-[Contact](mailto:domi.braem@hotmail.com){.btn .btn-outline-primary}
 :::
 :::
 :::
