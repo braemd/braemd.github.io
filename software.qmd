@@ -1,0 +1,49 @@
+---
+title: "Software"
+description: "Open-source R packages by Dominic Bräm: pmxNODE for neural ODEs and optiDoseR for dose optimisation in Monolix, NONMEM, and nlmixr2."
+toc: false
+---
+
+I turn methods from my research into open-source R packages so they can be used directly in established pharmacometric software.
+
+::: card-grid
+::: tile
+![](assets/images/pmxNODE-sticker.webp){fig-alt="pmxNODE hex sticker"}
+
+### pmxNODE {#pmxnode}
+
+Use low-dimensional neural ODEs inside your structural models. pmxNODE translates NN functions into the equations required by **Monolix, NONMEM, and nlmixr2**.
+
+```r
+install.packages("pmxNODE")
+```
+
+Paper: [Bräm et al. 2025, CPT:PSP](https://doi.org/10.1002/psp4.13265) ·
+[CRAN](https://cran.r-project.org/package=pmxNODE) ·
+[GitHub](https://github.com/braemd/pmxNODE)
+
+Taught at workshops in Hong Kong (2026), Uppsala (2026), and Copenhagen (2025).
+
+[Tutorials →](tutorials/pmxNODE/index.qmd){.tile-link}
+:::
+
+::: tile
+### optiDoseR {#optidoser}
+
+Estimate optimal doses that fulfil predefined therapeutic targets. optiDoseR generates the model code and data for the OptiDose approach in **Monolix, NONMEM, and nlmixr2**.
+
+```r
+# install.packages("devtools")
+devtools::install_github("braemd/optiDoseR")
+```
+
+Paper: [Bräm et al. 2025, J Clin Pharmacol](https://doi.org/10.1002/jcph.6188) ·
+[GitHub](https://github.com/braemd/optiDoseR)
+
+OptiDose workshop at PAGE (2023).
+
+[Try the interactive dose optimiser](tools/dose-optimiser.qmd) to see the principle live in your browser.
+
+[Tutorials →](tutorials/optiDoseR/index.qmd){.tile-link}
+:::
+:::

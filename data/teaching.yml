@@ -1,0 +1,59 @@
+courses:
+  - period: "2024 – present"
+    title: "Informatics of Pharmacometrics"
+    institution: "University of Applied Sciences and Arts Northwestern Switzerland (FHNW)"
+    description: "Design and deliver an introductory pharmacometrics course at Master's level."
+
+  - period: "2022 – present"
+    title: "Introduction to R"
+    institution: "University of Basel"
+    description: "Design and teach an introductory R course for students and staff, combining theory with hands-on exercises."
+
+workshops:
+  - year: 2026
+    title: "Applying pmxNODE to Neural ODE-Based Pharmacometric Modeling"
+    host: "Chinese University of Hong Kong"
+    invited: true
+    description: "Hands-on workshop on implementing neural ODE models with the R package pmxNODE."
+    software: pmxNODE
+
+  - year: 2026
+    title: "Neural ODEs for Automated Pharmacometric Model Development"
+    host: "Uppsala University"
+    invited: true
+    description: "Using neural ODEs to support automated model development in pharmacometrics."
+
+  - year: 2025
+    title: "Neural Ordinary Differential Equations in Pharmacometrics"
+    host: "University of Copenhagen"
+    invited: true
+    description: "Theory and hands-on training for academic and industry participants on fitting pharmacometric data and automated model development with neural ODEs in Monolix."
+
+  - year: 2023
+    title: "Machine Learning in Pharmacometrics"
+    host: "University at Buffalo"
+    invited: true
+    description: "Theory and hands-on training on integrating machine learning with pharmacometric modelling in Monolix."
+
+  - year: 2023
+    title: "OptiDose for Individualized Dose Optimization in NONMEM"
+    host: "PAGE conference"
+    description: "Hands-on workshop on applying the OptiDose algorithm to estimate individualised dosing regimens."
+    software: optiDoseR
+
+supervision:
+  - year: "2026"
+    role: "Master's thesis supervisor"
+    description: "Implementation of a Python-based framework for pharmacometric modelling."
+
+  - year: "2026"
+    role: "Supervisor, external PhD-level industry internship"
+    description: "A PhD researcher evaluating pmxNODE on pharmacometric data from clinical drug-development studies at Roche."
+
+  - year: "2025"
+    role: "Supervisor, two Master's research projects"
+    description: "Two FHNW students conducting pharmacometric simulations and analyses of caffeine pharmacokinetics in neonates at UKBB."
+
+  - year: "2022 – 2023"
+    role: "Mentor, Applied Pharmacometrics Training Fellowship"
+    description: "Mentored four PhD-level scientists from Africa in pharmacometric modelling and dose analysis of anthelmintic therapies, with the Swiss Tropical and Public Health Institute."

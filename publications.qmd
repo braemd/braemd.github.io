@@ -1,0 +1,32 @@
+---
+title: "Publications"
+description: "Peer-reviewed publications and patents by Dominic Bräm on machine learning in pharmacometrics, dose optimisation, and paediatric clinical pharmacology."
+freeze: false
+execute:
+  echo: false
+---
+
+```{r}
+source("R/site.R")
+pubs <- site_data("publications")
+n_first <- sum(vapply(pubs, is_first_author, TRUE))
+```
+
+`r length(pubs)` peer-reviewed articles, `r n_first` of them as first author. Up-to-date lists and citation metrics are on [Google Scholar](https://scholar.google.com/citations?user=3uPj-l8AAAAJ) and [ORCID](https://orcid.org/0000-0001-9094-8361).
+
+```{r}
+#| output: asis
+publications_by_year()
+```
+
+## Patents
+
+```{r}
+#| output: asis
+for (p in site_data("cv")$patents) {
+  out(div(class = "pub",
+          div(class = "pub-title", p$title),
+          div(class = "pub-authors", authors_html(p$authors)),
+          div(class = "pub-meta", p$status)))
+}
+```

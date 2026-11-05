@@ -1,0 +1,31 @@
+---
+title: "Tutorials"
+description: "Step-by-step tutorials for the R packages pmxNODE and optiDoseR in Monolix, NONMEM, and nlmixr2."
+toc: false
+aliases:
+  - /tutorials.html
+---
+
+::: section-intro
+Here you will find tutorials for my R packages.
+:::
+
+::: card-grid
+::: tile
+![](../assets/images/pmxNODE-sticker.webp){fig-alt="pmxNODE hex sticker"}
+
+### pmxNODE
+
+pmxNODE is an R package that facilitates the implementation of low-dimensional NODEs in pharmacometric software like Monolix, NONMEM, and nlmixr2. This allows complex pharmacometric data to be fitted without the classical model development process. The translation of NODEs to classical ODEs will also be covered in these tutorials.
+
+[1 tutorial →](pmxNODE/index.qmd){.tile-link .stretched-link}
+:::
+
+::: tile
+### optiDoseR
+
+optiDoseR is a wrapper for optiDose, an approach to estimate optimal doses that fulfil predefined therapeutic targets in Monolix, NONMEM, and nlmixr2. optiDoseR makes it easy to generate the required model code and data for these software.
+
+[4 tutorials →](optiDoseR/index.qmd){.tile-link .stretched-link}
+:::
+:::

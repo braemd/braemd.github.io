@@ -1,0 +1,206 @@
+---
+title: "Interactive dose optimisation"
+description: "Define a therapeutic target for a PKPD model and let an OptiDose-style optimiser find the dose, live in your browser."
+toc: false
+echo: false
+code-copy: false
+resources:
+  - pkpd.js
+---
+
+Choose a therapeutic target, and the optimiser finds the dose that fulfils it. Everything runs in your browser, so the result updates as soon as you change an input.
+
+::: {.callout-warning appearance="simple"}
+This page illustrates the optimisation principle with an example model. It is not intended for clinical dosing decisions.
+:::
+
+```{ojs}
+import { simulate, optimiseDose, metrics, objective, defaultParams } from "./pkpd.js"
+```
+
+::: {.grid}
+::: {.g-col-12 .g-col-lg-4}
+
+#### Target
+
+```{ojs}
+// A link with ?target=pd_min|cmax_max|auc_mic preselects the target
+initialTarget = {
+  const t = new URLSearchParams(location.search).get("target");
+  return ["pd_min", "cmax_max", "auc_mic"].includes(t) ? t : "pd_min";
+}
+```
+
+```{ojs}
+viewof targetType = Inputs.radio(
+  new Map([
+    ["PD response must not fall below a threshold", "pd_min"],
+    ["Peak concentration must not exceed a threshold", "cmax_max"],
+    ["AUC/MIC must reach a threshold", "auc_mic"]
+  ]),
+  { value: initialTarget }
+)
+```
+
+```{ojs}
+viewof threshold = Inputs.number({
+  value: { pd_min: 30, cmax_max: 4, auc_mic: 125 }[targetType],
+  label: { pd_min: "Minimum PD response", cmax_max: "Maximum concentration (mg/L)", auc_mic: "Target AUC/MIC (h)" }[targetType]
+})
+```
+
+```{ojs}
+viewof mic = targetType === "auc_mic"
+  ? Inputs.number({ value: 1, label: "MIC (mg/L)", min: 0.001 })
+  : Object.assign(html`<span>`, { value: 1 })
+```
+
+```{ojs}
+viewof win = Inputs.form({
+  from: Inputs.number({ value: 0, label: "Evaluate from (h)", min: 0 }),
+  to: Inputs.number({ value: targetType === "auc_mic" ? 24 : 200, label: "Evaluate to (h)", min: 1 })
+})
+```
+
+#### Dosing regimen
+
+```{ojs}
+viewof regimen = Inputs.form({
+  nDoses: Inputs.range([1, 10], { value: 1, step: 1, label: "Number of doses" }),
+  interval: Inputs.range([4, 72], { value: 24, step: 4, label: "Dosing interval (h)" })
+})
+```
+
+```{ojs}
+viewof doseMax = Inputs.number({ value: 200, label: "Search doses up to (mg)", min: 1 })
+```
+
+<details class="model-params">
+<summary>Model parameters</summary>
+
+```{ojs}
+viewof modelParams = Inputs.form({
+  tlag: Inputs.number({ value: +defaultParams.tlag.toFixed(3), label: "Lag time (h)", min: 0 }),
+  ka: Inputs.number({ value: +defaultParams.ka.toFixed(3), label: "ka (1/h)", min: 0.001 }),
+  V: Inputs.number({ value: +defaultParams.V.toFixed(3), label: "V (L)", min: 0.01 }),
+  CL: Inputs.number({ value: +defaultParams.CL.toFixed(4), label: "CL (L/h)", min: 0.0001 }),
+  R0: Inputs.number({ value: +defaultParams.R0.toFixed(2), label: "Baseline response R0", min: 0 }),
+  kout: Inputs.number({ value: +defaultParams.kout.toFixed(4), label: "kout (1/h)", min: 0.0001 }),
+  Imax: Inputs.number({ value: +defaultParams.Imax.toFixed(3), label: "Imax", min: 0, max: 1 }),
+  IC50: Inputs.number({ value: +defaultParams.IC50.toFixed(3), label: "IC50 (mg/L)", min: 0.001 })
+})
+```
+
+One-compartment PK with first-order absorption and lag time; indirect-response PD with inhibition of production: $\frac{dR}{dt} = k_{in}\left(1 - \frac{I_{max} C}{C + IC_{50}}\right) - k_{out} R$, with $k_{in} = R_0 k_{out}$.
+
+</details>
+
+:::
+::: {.g-col-12 .g-col-lg-8}
+
+```{ojs}
+target = ({ type: targetType, threshold, from: win.from, to: win.to, mic })
+tEnd = Math.max(win.to, (regimen.nDoses - 1) * regimen.interval + 48)
+opt = optimiseDose(regimen, modelParams, target, tEnd, doseMax)
+simOpt = simulate(opt.dose, regimen, modelParams, tEnd)
+mOpt = metrics(simOpt, target)
+feasible = objective(simOpt, target).constraint < 1e-3
+```
+
+```{ojs}
+function summary(m) {
+  if (targetType === "pd_min") return `lowest PD response ${m.minR.toFixed(1)} (target ≥ ${threshold})`;
+  if (targetType === "cmax_max") return `peak concentration ${m.cmax.toFixed(2)} mg/L at ${m.tmax.toFixed(1)} h (target ≤ ${threshold})`;
+  return `AUC/MIC ${m.aucMic.toFixed(1)} h (target ≥ ${threshold})`;
+}
+```
+
+```{ojs}
+html`<div class="opt-result">
+  <div class="opt-label">Optimal dose${regimen.nDoses > 1 ? ` per administration (${regimen.nDoses} × every ${regimen.interval} h)` : ""}</div>
+  <div class="opt-dose">${opt.dose.toFixed(1)} mg</div>
+  <div class="opt-detail">${summary(mOpt)}, evaluated ${win.from}–${win.to} h</div>
+  ${opt.atBound ? html`<div class="opt-warn">The optimum lies at the search limit. Increase "Search doses up to".</div>` : ""}
+  ${!feasible ? html`<div class="opt-warn">The target cannot be met with this model and regimen; the dose shown violates it least.</div>` : ""}
+</div>`
+```
+
+```{ojs}
+viewof cmpDose = Inputs.range([0, doseMax], { value: Math.round(opt.dose * 10) / 10, step: 0.1, label: "Compare with dose (mg)" })
+```
+
+```{ojs}
+simCmp = simulate(cmpDose, regimen, modelParams, tEnd)
+mCmp = metrics(simCmp, target)
+html`<div class="opt-detail">Comparison dose: ${summary(mCmp)}</div>`
+```
+
+```{ojs}
+function rows(sim, series, key) {
+  const out = [];
+  for (let i = 0; i < sim.time.length; i += 5) out.push({ time: sim.time[i], value: sim[key][i], series });
+  return out;
+}
+colors = ({ domain: ["Optimal dose", "Comparison dose"], range: ["#a349a4", "#8a8f98"] })
+
+function panel(key, ylabel, rule) {
+  return Plot.plot({
+    width,
+    height: 240,
+    marginLeft: 55,
+    x: { label: "Time (h)", domain: [0, tEnd] },
+    y: { label: ylabel, grid: true, zero: true },
+    color: { ...colors, legend: true },
+    marks: [
+      Plot.rectX([{ x1: win.from, x2: Math.min(win.to, tEnd) }], { x1: "x1", x2: "x2", fill: "currentColor", fillOpacity: 0.06 }),
+      key === "conc" && targetType === "auc_mic"
+        ? Plot.areaY(rows(simOpt, "Optimal dose", key).filter((d) => d.time >= win.from && d.time <= win.to),
+            { x: "time", y: "value", fill: "#a349a4", fillOpacity: 0.18 })
+        : null,
+      rule === undefined ? null : Plot.ruleY([rule], { stroke: "#e8590c", strokeWidth: 1.5, strokeDasharray: "6,4" }),
+      Plot.line(rows(simCmp, "Comparison dose", key), { x: "time", y: "value", stroke: "series", strokeWidth: 2, strokeDasharray: "4,3" }),
+      Plot.line(rows(simOpt, "Optimal dose", key), { x: "time", y: "value", stroke: "series", strokeWidth: 2.5 }),
+      Plot.ruleY([0])
+    ]
+  });
+}
+```
+
+```{ojs}
+panel("conc", "Concentration (mg/L)", targetType === "cmax_max" ? threshold : undefined)
+```
+
+```{ojs}
+targetType === "auc_mic" ? html`` : panel("resp", "PD response", targetType === "pd_min" ? threshold : undefined)
+```
+
+```{ojs}
+md`${targetType === "auc_mic"
+  ? "The grey band is the evaluation window; the purple area is the AUC compared with the target (AUC/MIC)."
+  : "The grey band is the evaluation window; the dashed orange line is the threshold."}`
+```
+
+:::
+:::
+
+## How the optimiser works
+
+Following the [OptiDose](https://doi.org/10.1002/jcph.6188) approach, the target is turned into a penalty: violating it costs a lot, and a much smaller secondary term makes the answer unique. For a lower limit on the PD response or an upper limit on the peak concentration, the secondary term rewards exposure, so the optimiser finds the *highest* dose that still respects the limit. For AUC/MIC, it penalises exposure, so the optimiser finds the *lowest* dose that reaches the target. The optimiser scans the dose range and then refines the minimum with a golden-section search.
+
+```{ojs}
+Plot.plot({
+  width,
+  height: 220,
+  marginLeft: 55,
+  x: { label: "Dose (mg)" },
+  y: { label: "Penalty (log scale)", type: "log", grid: true },
+  marks: [
+    Plot.line(opt.landscape, { x: "dose", y: (d) => d.objective + 1e-4, stroke: "currentColor" }),
+    Plot.ruleX([opt.dose], { stroke: "#a349a4", strokeWidth: 2 }),
+    Plot.text([opt.dose], { x: (d) => d, frameAnchor: "top", dx: 6, textAnchor: "start", text: (d) => `optimum ${d.toFixed(1)} mg`, fill: "#a349a4" })
+  ]
+})
+```
+
+In pharmacometric software, [optiDoseR](../tutorials/optiDoseR/index.qmd) sets up the same idea for Monolix, NONMEM, and nlmixr2, where the dose is *estimated* together with the model, including individual doses for patients with inter-individual variability.
+

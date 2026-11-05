@@ -1,0 +1,91 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "!_drafts/"
+    - "!docs/"
+    - "!R/"
+
+execute:
+  # Re-run code only when a page's source changes; results are stored in _freeze/
+  freeze: auto
+
+website:
+  title: "Dominic Bräm"
+  description: "Dominic Bräm, postdoctoral researcher in Pediatric Clinical Pharmacology and Pharmacometrics at UKBB Basel: machine learning for pharmacometric modelling and dose optimisation."
+  site-url: https://braemd.github.io/
+  repo-url: https://github.com/braemd/braemd.github.io
+  favicon: assets/images/favicon.svg
+  image: assets/images/og-image.jpg
+  open-graph: true
+  twitter-card: true
+  page-navigation: true
+  back-to-top-navigation: true
+  search:
+    location: navbar
+    type: overlay
+
+  navbar:
+    left:
+      - text: Research
+        href: research.qmd
+      - text: Publications
+        href: publications.qmd
+      - text: Software
+        href: software.qmd
+      - text: Teaching
+        href: teaching.qmd
+      - text: Talks & Media
+        href: talks.qmd
+      - text: CV
+        href: cv.qmd
+    right:
+      - icon: github
+        href: https://github.com/braemd
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://linkedin.com/in/dominic-braem
+        aria-label: LinkedIn
+      - icon: mortarboard
+        href: https://scholar.google.com/citations?user=3uPj-l8AAAAJ
+        aria-label: Google Scholar
+      - icon: person-badge
+        href: https://orcid.org/0000-0001-9094-8361
+        aria-label: ORCID
+      - icon: envelope
+        href: mailto:domi.braem@hotmail.com
+        aria-label: Email
+
+  sidebar:
+    - id: tutorials
+      title: Tutorials
+      style: docked
+      contents:
+        - tutorials/index.qmd
+        - section: pmxNODE
+          href: tutorials/pmxNODE/index.qmd
+          contents:
+            - tutorials/pmxNODE/intro.qmd
+        - section: optiDoseR
+          href: tutorials/optiDoseR/index.qmd
+          contents:
+            - tutorials/optiDoseR/intro.qmd
+            - tutorials/optiDoseR/setup.qmd
+            - tutorials/optiDoseR/nlmixr2-warfarin.qmd
+            - tutorials/optiDoseR/nlmixr2-warfarin-iiv.qmd
+
+  page-footer:
+    left: "© 2026 Dominic Bräm"
+    right: "Built with [Quarto](https://quarto.org)"
+
+format:
+  html:
+    theme:
+      light: [cosmo, assets/light.scss, assets/custom.scss]
+      dark: [darkly, assets/dark.scss, assets/custom.scss]
+    toc: true
+    code-copy: true
+    code-overflow: scroll
+    link-external-newwindow: true
+    smooth-scroll: true

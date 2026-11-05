@@ -1,0 +1,15 @@
+# Quarto build output (deployment is handled separately; see README)
+/_site/
+/.quarto/
+*_files/libs/
+
+# R / RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+**/*.quarto_ipynb
+
+# Unredacted CV original; the published, redacted copy is assets/files/CV_Dominic_Braem.pdf
+docs/Curriculum_vitae.pdf

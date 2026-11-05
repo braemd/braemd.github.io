@@ -1,0 +1,51 @@
+# CV entries shown on cv.qmd. Contact details are intentionally not stored here.
+
+positions:
+  - period: "2025 – present"
+    title: "Postdoctoral researcher, Pediatric Clinical Pharmacology and Pharmacometrics"
+    institution: "University Children's Hospital Basel (UKBB)"
+    description: "Machine learning algorithms for automatic pharmacometric model development; model-informed drug dosing to improve clinical care in paediatrics."
+
+  - period: "2026"
+    title: "Research exchange (1 month)"
+    institution: "Uppsala University, Pharmacometrics"
+    description: "Implementation of neural ODEs to model pharmacometric data in leishmaniasis."
+
+  - period: "2021 – 2024"
+    title: "PhD in Pediatric Clinical Pharmacology and Pharmacometrics, summa cum laude"
+    institution: "University of Basel"
+    description: "Neural ODE methods and computational workflows for pharmacometric model development, dose optimisation, covariate imputation, and pharmacokinetic analysis."
+
+  - period: "2020 – 2021"
+    title: "Internship, Advanced Analytics in Pharmacometrics"
+    institution: "Roche"
+    description: "Application of artificial neural networks in PKPD modelling."
+
+education:
+  - period: "2018 – 2020"
+    title: "MSc Pharmaceutical Sciences"
+    institution: "ETH Zurich"
+    description: "Master's thesis on population pharmacokinetics in paediatrics (busulfan, gentamicin) and PET image analysis; research project on an interrupted time-series analysis of paracetamol intoxications."
+
+  - period: "2015 – 2018"
+    title: "BSc Pharmaceutical Sciences"
+    institution: "ETH Zurich"
+
+awards:
+  - year: 2024
+    title: "PhD graduated summa cum laude, University of Basel"
+  - year: 2022
+    title: "Best poster presentation, UKBB Research Day"
+  - year: 2020
+    title: "GSIA Prize for Master's thesis, ETH Zurich"
+  - year: 2018
+    title: "BSc completed within the top 5% of students, ETH Zurich"
+
+patents:
+  - authors: "Bräm DS, Koch G, Pfister M"
+    title: "Computer system and method for generating a data driven interpretable pharmacometrics prediction model to predict medical state parameters of a patient of a special population"
+    status: "European Patent Office, submitted 2024-04-26 (published)"
+
+  - authors: "Bräm DS, Parrott N, Hutchinson L, Steiert B"
+    title: "Prediction of pharmacokinetic curves"
+    status: "European Patent Office, filed 2022-07-14, published 2023-01-19, EP4371118 (decision pending)"

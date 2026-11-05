@@ -1,0 +1,35 @@
+---
+title: "Teaching"
+description: "Courses, invited workshops, and supervision by Dominic Bräm in pharmacometrics, machine learning, and R."
+freeze: false
+execute:
+  echo: false
+---
+
+```{r}
+source("R/site.R")
+teaching <- site_data("teaching")
+```
+
+## Courses
+
+```{r}
+#| output: asis
+timeline(teaching$courses, sub = "institution")
+```
+
+## Workshops
+
+```{r}
+#| output: asis
+timeline(teaching$workshops, when = "year", sub = "host")
+```
+
+Workshop materials for [pmxNODE](tutorials/pmxNODE/index.qmd) and [optiDoseR](tutorials/optiDoseR/index.qmd) are available as tutorials.
+
+## Supervision and mentoring
+
+```{r}
+#| output: asis
+timeline(teaching$supervision, when = "year", title = "role")
+```
