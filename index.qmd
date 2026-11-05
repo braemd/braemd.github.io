@@ -1,0 +1,101 @@
+---
+pagetitle: "Machine Learning & Pharmacometrics"
+description: "Dominic Bräm, postdoctoral researcher in Pediatric Clinical Pharmacology and Pharmacometrics at UKBB Basel. Machine learning methods for pharmacometric modelling and dose optimisation."
+toc: false
+title-block-style: none
+image: assets/images/og-image.jpg
+freeze: false
+execute:
+  echo: false
+---
+
+```{r}
+source("R/site.R")
+```
+
+::: hero
+<img src="assets/images/portrait.webp" alt="Portrait of Dominic Bräm" class="hero-portrait">
+
+::: hero-text
+# Dominic Bräm
+
+[Postdoctoral researcher in Pediatric Clinical Pharmacology and Pharmacometrics, University Children's Hospital Basel (UKBB)]{.hero-role}
+
+[I develop machine learning methods that speak the language of pharmacometrics, and use them to find better doses, especially for children.]{.lead}
+
+::: hero-actions
+[Research](research.qmd){.btn .btn-primary}
+[Publications](publications.qmd){.btn .btn-outline-primary}
+[CV](cv.qmd){.btn .btn-outline-primary}
+[Contact](mailto:domi.braem@hotmail.com){.btn .btn-outline-primary}
+:::
+:::
+:::
+
+## Research
+
+::: card-grid
+::: tile
+### Machine learning for pharmacometrics
+
+Low-dimensional neural ODEs that integrate pharmacokinetic principles, run in Monolix, NONMEM, and nlmixr2, and support automated model development.
+
+[Learn more →](research.qmd#ml){.tile-link .stretched-link}
+:::
+
+::: tile
+### Dose optimisation
+
+Estimating, rather than simulating, doses that fulfil therapeutic targets with OptiDose, and model-informed dosing for paediatric patients.
+
+[Learn more →](research.qmd#dosing){.tile-link .stretched-link}
+:::
+
+::: tile
+### Paediatric & clinical pharmacometrics
+
+Pharmacometric analyses for clinical studies in paediatrics and global health, from neonates to adolescents.
+
+[Learn more →](research.qmd#clinical){.tile-link .stretched-link}
+:::
+:::
+
+## Selected publications
+
+```{r}
+#| output: asis
+pub_list(publications_where(selected = TRUE))
+```
+
+[All publications →](publications.qmd)
+
+## Software
+
+::: card-grid
+::: tile
+![](assets/images/pmxNODE-sticker.webp){fig-alt="pmxNODE hex sticker"}
+
+### pmxNODE
+
+Neural ODEs in Monolix, NONMEM, and nlmixr2. Available on CRAN.
+
+[Software & tutorials →](software.qmd#pmxnode){.tile-link .stretched-link}
+:::
+
+::: tile
+### optiDoseR
+
+Code and data generation for OptiDose dose estimation in Monolix, NONMEM, and nlmixr2.
+
+[Software & tutorials →](software.qmd#optidoser){.tile-link .stretched-link}
+:::
+:::
+
+## Recent
+
+- **2026**: Invited workshop on pmxNODE at the Chinese University of Hong Kong
+- **2026**: Invited talk at EMBL-EBI, Hinxton: *Learning from Machine Learning in Pharmacometric Modelling*
+- **2026**: Research exchange at Uppsala University, applying neural ODEs to leishmaniasis data
+- **2026**: [Automated pharmacometric model development with low-dimensional neural ODEs and LASSO](https://doi.org/10.1002/psp4.70285), CPT:PSP
+
+[All talks →](talks.qmd) · [Teaching →](teaching.qmd)

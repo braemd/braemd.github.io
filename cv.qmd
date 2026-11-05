@@ -1,0 +1,51 @@
+---
+title: "CV"
+description: "Curriculum vitae of Dominic Bräm, postdoctoral researcher in Pediatric Clinical Pharmacology and Pharmacometrics at the University Children's Hospital Basel."
+image: assets/images/og-image.jpg
+freeze: false
+execute:
+  echo: false
+aliases:
+  - /about.html
+---
+
+```{r}
+source("R/site.R")
+cv <- site_data("cv")
+```
+
+[Download CV (PDF)](assets/files/CV_Dominic_Braem.pdf){.btn .btn-primary}
+[Publications](publications.qmd){.btn .btn-outline-primary}
+[Teaching](teaching.qmd){.btn .btn-outline-primary}
+[Google Scholar](https://scholar.google.com/citations?user=3uPj-l8AAAAJ){.btn .btn-outline-primary}
+
+## Short bio
+
+::: bio
+Dominic Bräm is a postdoctoral researcher in Pediatric Clinical Pharmacology and Pharmacometrics at the University Children's Hospital Basel (UKBB). He studied pharmaceutical sciences at ETH Zurich and received his PhD *summa cum laude* from the University of Basel in 2024. His research combines machine learning with pharmacometric modelling, in particular low-dimensional neural ordinary differential equations for automated model development, and applies model-informed dosing to improve paediatric care. He is the author of the R packages pmxNODE and optiDoseR and teaches pharmacometrics and R at FHNW and the University of Basel.
+:::
+
+## Positions
+
+```{r}
+#| output: asis
+timeline(cv$positions, sub = "institution")
+```
+
+## Education
+
+```{r}
+#| output: asis
+timeline(cv$education, sub = "institution")
+```
+
+## Awards
+
+```{r}
+#| output: asis
+timeline(cv$awards, when = "year", body = "none")
+```
+
+## Beyond research
+
+Scout leader since 2010, currently leading an association of more than 120 members; editor-in-chief of the ETH pharmacy student magazine *Tonikum* (2018–2020).

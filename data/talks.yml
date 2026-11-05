@@ -1,0 +1,43 @@
+# Selected invited talks and conference presentations. Add `slides:` with a URL when available.
+
+- year: 2026
+  title: "Learning from Machine Learning in Pharmacometric Modelling"
+  event: "EMBL-EBI Next-Generation ADMET modelling for drug discovery"
+  place: "Hinxton, UK"
+  invited: true
+
+- year: 2025
+  title: "Pharmacometrics Modeling to Inform Dose Optimization"
+  event: "University of Cambridge and AstraZeneca Clinical Pharmacology training"
+  place: "Cambridge, UK"
+  invited: true
+
+- year: 2024
+  title: "Modelling pharmacometric data with Neural ODEs"
+  event: "DMDG Open Meeting"
+  place: "York, UK"
+
+- year: 2024
+  title: "Modeling pharmacometric data with Neural ODEs: Get insights into unknown model structures with machine learning"
+  event: "Basel Modeling & Simulation Seminar"
+  place: "Basel, Switzerland"
+
+- year: 2023
+  title: "Modelling pharmacometric data with Neural ODEs including inter-individual variability"
+  event: "American Conference on Pharmacometrics (ACoP)"
+  place: "Maryland, USA"
+
+- year: 2023
+  title: "Neural ODE structures based on pharmacokinetic principles"
+  event: "Population Approach Group Europe (PAGE)"
+  place: "A Coruña, Spain"
+
+- year: 2022
+  title: "Machine Learning supports covariate imputation in Pharmacometrics"
+  event: "ASCPT Satellite Session"
+  place: "online"
+
+- year: 2021
+  title: "Supporting Pharmacometrics by learning with machines"
+  event: "Basel Modeling & Simulation Seminar"
+  place: "Basel, Switzerland"

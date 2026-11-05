@@ -1,0 +1,28 @@
+---
+title: "Talks & Media"
+description: "Selected invited talks and conference presentations by Dominic Bräm, and media coverage of his research."
+freeze: false
+execute:
+  echo: false
+---
+
+```{r}
+source("R/site.R")
+```
+
+## Selected talks
+
+```{r}
+#| output: asis
+talks <- lapply(site_data("talks"), function(t) { t$where <- paste0(t$event, ", ", t$place); t })
+timeline(talks, when = "year", sub = "where", body = "none")
+```
+
+## In the media {#media}
+
+A study by ETH Zurich and Tox Info Suisse showed that accidental paracetamol poisonings increased after 1000 mg tablets became available ([Martinez-De la Torre et al. 2020, *JAMA Network Open*](https://doi.org/10.1001/jamanetworkopen.2020.22897)). I contributed the interrupted time-series analysis. The study was covered by:
+
+```{r}
+#| output: asis
+media_list()
+```

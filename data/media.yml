@@ -1,0 +1,58 @@
+# Media coverage. `id` is referenced from data/publications.yml (field `media`).
+
+- id: eth-news
+  outlet: "ETH News"
+  title: "Paracetamol poisonings up"
+  date: 2020-10-28
+  lang: EN
+  url: https://ethz.ch/en/news-and-events/eth-news/news/2020/10/paracetamol-poisonings-up.html
+
+- id: medicalxpress
+  outlet: "Medical Xpress"
+  title: "Paracetamol poisonings up"
+  date: 2020-10-28
+  lang: EN
+  url: https://medicalxpress.com/news/2020-10-paracetamol-poisonings.html
+
+- id: medinside
+  outlet: "Medinside"
+  title: "In der Schweiz nehmen Schmerzmittel-Vergiftungen zu"
+  date: 2020-10-29
+  lang: DE
+  url: https://www.medinside.ch/de/post/in-der-schweiz-haben-schmerzmittel-vergiftungen-zugenommen
+
+- id: biermann
+  outlet: "Biermann Medizin"
+  title: "Mehr Paracetamol-Vergiftungen in der Schweiz"
+  date: 2020-11-02
+  lang: DE
+  url: https://biermann-medizin.de/mehr-paracetamol-vergiftungen-in-der-schweiz/
+
+- id: pharmazeutische-zeitung
+  outlet: "Pharmazeutische Zeitung"
+  title: "Mehr Paracetamol-Vergiftungen durch 1000-mg-Tablette"
+  date: 2020-11-03
+  lang: DE
+  url: https://www.pharmazeutische-zeitung.de/mehr-paracetamol-vergiftungen-durch-1000-mg-tablette-121559/
+
+- id: medical-dialogues
+  outlet: "Medical Dialogues"
+  title: "High doses of paracetamol associated with increased poisonings: JAMA"
+  date: 2020-11-03
+  lang: EN
+  url: https://medicaldialogues.in/medicine/news/high-doses-of-paracetamol-associated-with-increased-poisonings-jama-71092
+
+- id: infomed
+  outlet: "infomed-screen"
+  title: "1000-mg-Paracetamol-Tabletten sind gefährlich"
+  date: 2020-12-15
+  lang: DE
+  url: https://www.infomed.ch/screen_template.php?articleid=2931
+
+- id: blick
+  outlet: "Blick"
+  title: "Hersteller, Marktführer: Ausgaben für Schmerzmittel in der Schweiz"
+  date: 2023-06-19
+  lang: DE
+  url: https://www.blick.ch/wirtschaft/hersteller-marktfuehrer-ausgaben-fuer-schmerzmittel-in-der-schweiz/p1pc5sr
+  note: "cites the study"

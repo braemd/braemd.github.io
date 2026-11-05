@@ -1,0 +1,161 @@
+# Publication list. Source: CV / ORCID (https://orcid.org/0000-0001-9094-8361)
+#
+# Fields
+#   theme:    ml | dosing | clinical   (used for grouping on the Research page)
+#   selected: true -> shown on the Home page
+#   code:     link to software used or released with the paper
+#   media:    ids from data/media.yml
+
+- title: "Automated Pharmacometric Model Development by Leveraging Low-Dimensional Neural ODEs and LASSO Regression"
+  authors: "Bräm DS, Steiert B, Steffens B, Pfister M, Koch G"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2026
+  doi: "10.1002/psp4.70285"
+  theme: ml
+  selected: true
+
+- title: "Evaluation of adalimumab tapering regimens in children and adolescents with juvenile idiopathic arthritis in remission: a simulation study"
+  authors: "Bräm DS, Gotta V, Koch G, Golhen K, Woerner A, Atkinson A, van den Anker J, Pfister M, Welzel T"
+  journal: "Pediatric Rheumatology"
+  year: 2026
+  doi: "10.1186/s12969-026-01184-w"
+  theme: dosing
+
+- title: "Predictive AI in Clinical Pharmacology: A Call to Action to Develop Robust Benchmarking Practices"
+  authors: "Ponce-Bobadilla AV, Bräm DS, et al."
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2026
+  doi: "10.1002/psp4.70155"
+  theme: ml
+
+- title: "Therapieintensivierung in der Rheumatologie am Beispiel der nicht-systemischen juvenilen idiopathischen Arthritis: die Sicht der Pharmakologie"
+  authors: "Bräm DS, Gotta V, Welzel T"
+  journal: "rheuma plus"
+  year: 2025
+  doi: "10.1007/s12688-025-00862-z"
+  theme: clinical
+
+- title: "Understanding and Streamlining Dose Finding: From Dose Simulation to Dose Estimation"
+  authors: "Bräm DS, Bachmann F, Schropp J, Gotta V, Steffens B, van den Anker J, Pfister M, Koch G"
+  journal: "The Journal of Clinical Pharmacology"
+  year: 2025
+  doi: "10.1002/jcph.6188"
+  theme: dosing
+  selected: true
+  code: https://github.com/braemd/optiDoseR
+
+- title: "Low-dimensional neural ordinary differential equations accounting for inter-individual variability implemented in Monolix and NONMEM"
+  authors: "Bräm DS, Steiert B, Pfister M, Steffens B, Koch G"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2025
+  doi: "10.1002/psp4.13265"
+  theme: ml
+  selected: true
+  code: https://cran.r-project.org/package=pmxNODE
+
+- title: "Redefining Parameter Estimation and Covariate Selection via Variational Autoencoders: One Run Is All You Need"
+  authors: "Rohleff J, Bachmann F, Nahum U, Bräm DS, Steffens B, Pfister M, Koch G, Schropp J"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2025
+  doi: "10.1002/psp4.70129"
+  theme: ml
+
+- title: "Influence of Disease Type and Activity on Adalimumab Exposure in Children with Inflammatory Rheumatic Diseases"
+  authors: "Golhen K, Welzel T, Atkinson A, Koch G, Bräm DS, van den Anker J, Woerner A, Pfister M, Gotta V"
+  journal: "The Journal of Clinical Pharmacology"
+  year: 2025
+  doi: "10.1002/jcph.70045"
+  theme: clinical
+
+- title: "Pharmacometric Analysis to Describe Pharmacokinetics and Exposure-Efficacy Response of Ivermectin in Adolescents Infected with Trichuris trichiura"
+  authors: "Ajayi DT, Orherhe OM, Pillai G, Mouksassi S, Steffens B, Bräm DS, Sprecher V, Hofmann D, Buettcher M, Coulibaly J, Ali SM, Keiser J, Pfister M"
+  journal: "The Journal of Clinical Pharmacology"
+  year: 2025
+  doi: "10.1002/jcph.6158"
+  theme: clinical
+
+- title: "Applying Neural ODEs to Derive a Mechanism-Based Model for Characterizing Maturation-Related Serum Creatinine Dynamics in Preterm Newborns"
+  authors: "Bräm DS, Koch G, Allegaert K, van den Anker J, Pfister M"
+  journal: "The Journal of Clinical Pharmacology"
+  year: 2024
+  doi: "10.1002/jcph.2460"
+  theme: ml
+
+- title: "Pharmacometric in silico studies used to facilitate a national dose standardisation process in neonatology – application to amikacin"
+  authors: "Gotta V, Bielicki JA, Paioni P, Csajka C, Bräm DS, Berger C, Giger E, Buettcher M, Posfay-Barbe KM, van den Anker J, Pfister M"
+  journal: "Swiss Medical Weekly"
+  year: 2024
+  doi: "10.57187/s.3632"
+  theme: dosing
+
+- title: "Understanding Drug Exposure and Trichuris trichiura Cure Rates: A Pharmacometric Approach for Albendazole-Ivermectin Co-medication in Tanzania and Côte d'Ivoire"
+  authors: "Pillay-Fuentes Lorente V, Nwogu-Attah J, Steffens B, Bräm DS, Sprecher V, Hofmann D, Buettcher M, Pillai G, Mouksassi S, Coulibaly J, Pfister M, Keiser J"
+  journal: "Drugs in R&D"
+  year: 2024
+  doi: "10.1007/s40268-024-00476-4"
+  theme: clinical
+
+- title: "Low-dimensional neural ODEs and their application in pharmacokinetics"
+  authors: "Bräm DS, Nahum U, Schropp J, Pfister M, Koch G"
+  journal: "Journal of Pharmacokinetics and Pharmacodynamics"
+  year: 2023
+  doi: "10.1007/s10928-023-09886-4"
+  theme: ml
+  selected: true
+
+- title: "Population Pharmacokinetic Modeling for Twice-Daily Intravenous Busulfan in a Large Cohort of Pediatric Patients Undergoing Hematopoietic Stem Cell Transplantation – A 10-Year Single-Center Experience"
+  authors: "Schreib KM, Bräm DS, Zeilhofer UB, Müller D, Güngör T, Krämer SD, Hauri-Hohl MM"
+  journal: "Pharmaceutics"
+  year: 2023
+  doi: "10.3390/pharmaceutics16010013"
+  theme: clinical
+
+- title: "Introduction of an artificial neural network-based method for concentration-time predictions"
+  authors: "Bräm DS, Parrott N, Hutchinson L, Steiert B"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2022
+  doi: "10.1002/psp4.12786"
+  theme: ml
+
+- title: "Evaluation of machine learning methods for covariate data imputation in pharmacometrics"
+  authors: "Bräm DS, Nahum U, Atkinson A, Koch G, Pfister M"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2022
+  doi: "10.1002/psp4.12874"
+  theme: ml
+
+- title: "Model enhanced reinforcement learning to enable precision dosing: A theoretical case study with dosing of propofol"
+  authors: "Ribba B, Bräm DS, Baverel PG, Peck RW"
+  journal: "CPT: Pharmacometrics & Systems Pharmacology"
+  year: 2022
+  doi: "10.1002/psp4.12858"
+  theme: dosing
+
+- title: "Kinetics of iron absorption from ferrous fumarate with and without galacto-oligosaccharides determined from stable isotope appearance curves in women"
+  authors: "Husmann F, Stierli L, Bräm DS, et al."
+  journal: "The American Journal of Clinical Nutrition"
+  year: 2022
+  doi: "10.1093/ajcn/nqab361"
+  theme: clinical
+
+- title: "Gentamicin Population Pharmacokinetics in Pediatric Patients – A Prospective Study with Data Analysis Using the saemix Package in R"
+  authors: "Paioni P, Jäggi VF, Tilen R, Bräm DS, et al."
+  journal: "Pharmaceutics"
+  year: 2021
+  doi: "10.3390/pharmaceutics13101596"
+  theme: clinical
+
+- title: "National Poison Center Calls Before vs After Availability of High-Dose Acetaminophen (Paracetamol) Tablets in Switzerland"
+  authors: "Martinez-De la Torre A, Weiler S, Bräm DS, Allemann SS, Kupferschmidt H, Burden AM"
+  journal: "JAMA Network Open"
+  year: 2020
+  doi: "10.1001/jamanetworkopen.2020.22897"
+  theme: clinical
+  media: [eth-news, medinside, pharmazeutische-zeitung, medical-dialogues, infomed, biermann, medicalxpress, blick]
+
+- title: "[11C]mHED PET follows a two-tissue compartment model in mouse myocardium with norepinephrine transporter (NET)-dependent uptake, while [18F]LMI1195 uptake is NET-independent"
+  authors: "Mu L, Krämer SD, Warnock GI, Bräm DS, et al."
+  journal: "EJNMMI Research"
+  year: 2020
+  doi: "10.1186/s13550-020-00700-7"
+  theme: clinical

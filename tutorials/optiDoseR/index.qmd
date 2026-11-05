@@ -1,0 +1,23 @@
+---
+title: "optiDoseR"
+description: "optiDoseR is an R package that generates model code and data for the optiDose dose-optimisation approach in Monolix, NONMEM, and nlmixr2."
+toc: false
+aliases:
+  - /optiDoseR.html
+---
+
+[OptiDose](https://doi.org/10.1007/s10928-022-09840-w) is an approach based on control theory that estimates optimal doses fulfilling a predefined therapeutic goal. Since doses can be treated as a bioavailability to estimate, OptiDose was further implemented in [NONMEM](https://doi.org/10.1007/s10928-024-09940-9) and [Monolix](https://doi.org/10.1002/jcph.6188).
+
+To facilitate the implementation of OptiDose in pharmacometric software and make it more accessible, we created the R package [optiDoseR](https://github.com/braemd/optiDoseR). This package automatically generates the required code and data sets for the implementation of OptiDose in Monolix, NONMEM, and nlmixr2.
+
+## Tutorials
+
+1. [Introduction](intro.qmd): the optiDose approach and a first Monolix example
+2. [Setting up an OptiProject](setup.qmd): PMX models, therapeutic targets, and dose levels
+3. [optiDoseR in nlmixr2](nlmixr2-warfarin.qmd): estimating the dose for the typical patient
+4. [optiDoseR in nlmixr2 with IIV](nlmixr2-warfarin-iiv.qmd): estimating individual doses
+
+To see the principle without installing anything, try the [interactive dose optimiser](../../tools/dose-optimiser.qmd).
+
+[Start the introduction →](intro.qmd){.btn .btn-primary}
+[optiDoseR on GitHub](https://github.com/braemd/optiDoseR){.btn .btn-outline-primary}

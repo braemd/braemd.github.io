@@ -1,0 +1,53 @@
+---
+title: "Research"
+description: "Three research lines: machine learning methods for pharmacometrics, model-informed dose optimisation, and paediatric and clinical pharmacometrics."
+freeze: false
+execute:
+  echo: false
+aliases:
+  - /expertise/ml-in-pmx.html
+  - /expertise/pharmacometrics.html
+  - /expertise/r-programming.html
+  - /ml_in_pmx.html
+  - /pmx.html
+  - /r.html
+---
+
+```{r}
+source("R/site.R")
+```
+
+::: section-intro
+I work at the intersection of machine learning and pharmacometrics. My aim is machine learning that speaks the language of pharmacometrics: interpretable, compatible with established software, and directly usable to find better doses, especially for children.
+:::
+
+## Machine learning for pharmacometrics {#ml}
+
+Classical pharmacometric model development is slow and relies on assumptions about the structural model. Neural ordinary differential equations (NODEs) can learn these structures from data, but standard NODEs are large and hard to interpret. I developed **low-dimensional NODEs** that build pharmacokinetic principles into the network, can be implemented in Monolix, NONMEM, and nlmixr2, and support inter-individual variability. Building on this, I work on **automated model development**, translating NODEs into classical, interpretable equations. Earlier work covered neural networks for concentration-time predictions and machine learning for covariate imputation.
+
+**Software:** [pmxNODE](software.qmd#pmxnode)
+
+```{r}
+#| output: asis
+pub_list(publications_where(theme = "ml"))
+```
+
+## Dose optimisation {#dosing}
+
+Finding a dose that is both safe and effective is the end goal of most pharmacometric analyses. Instead of simulating many candidate doses, **OptiDose** uses optimal control to *estimate* the dose that fulfils predefined therapeutic targets directly within pharmacometric software. I apply model-informed dosing to clinical questions in paediatrics, from national dose standardisation in neonates to tapering regimens in juvenile idiopathic arthritis, and have explored reinforcement learning for precision dosing.
+
+**Software:** [optiDoseR](software.qmd#optidoser)
+
+```{r}
+#| output: asis
+pub_list(publications_where(theme = "dosing"))
+```
+
+## Paediatric and clinical pharmacometrics {#clinical}
+
+Children are not small adults: maturation changes how drugs are absorbed, distributed, and eliminated. I contribute pharmacometric analyses to clinical studies in paediatrics and global health, including busulfan and gentamicin in children, adalimumab in inflammatory rheumatic diseases, and anthelmintic therapies in Tanzania and Côte d'Ivoire. I also contributed the statistical analysis to a study on paracetamol poisonings in Switzerland that received [media coverage](talks.qmd#media).
+
+```{r}
+#| output: asis
+pub_list(publications_where(theme = "clinical"))
+```
