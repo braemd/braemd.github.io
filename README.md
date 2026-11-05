@@ -14,7 +14,6 @@ Source of the personal website of Dominic Bräm, built with [Quarto](https://qua
 | `tutorials/` | pmxNODE and optiDoseR tutorials (data files and references live next to the pages) |
 | `assets/` | Theme (`light.scss`, `dark.scss`, `custom.scss`), images, redacted CV PDF |
 | `_drafts/` | Work in progress, not rendered (Research page draft, CV source) |
-| `docs/` | Previous R Markdown build that is currently live; remove it once the GitHub Action deploys the site |
 | `.github/workflows/publish.yml` | Builds and deploys the site on every push to `main` |
 
 ## Adding a publication, talk, or workshop
